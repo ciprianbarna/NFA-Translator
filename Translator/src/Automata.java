@@ -22,20 +22,20 @@ public class Automata {
 
 
     public String translate(String input, int N){
-        int i= initialState, j, cont=0,del=0,m=0; // i= estado ; j= a/b ; cont for reading the input
+        int i= initialState, j, reader=0,del=0,m=0; // i= estado ; j= a/b ; reader for reading the input
         String res= "";
         int aux[] = new int[] {0,0};
-        boolean stop = true;
-        while(cont < input.length() && stop){ //recorre la matriz de transiciones hasta que se acabe la palabra o hasta que se detecte que la palabra no es valida
-            if(input.charAt(cont) == 'a'){j=0;} else{j=1;}//selecciona si es a o b
+        boolean stop = false;
+        while(reader < input.length() && !stop){ //recorre la matriz de transiciones hasta que se acabe la palabra o hasta que se detecte que la palabra no es valida
+            if(input.charAt(reader) == 'a'){j=0;} else{j=1;}//selecciona si es a o b
             if(transitions[i][j]>=0){
                 if(del<N){
-                    if(j==0){
+                    if(j==0){//si es a
                         if(aux[0] == 0){
                             aux[0]++;
                         }
                         else{
-                            res = res + input.charAt(cont);
+                            res = res + input.charAt(reader);
                         }
                     }
                     else{
@@ -43,23 +43,23 @@ public class Automata {
                             aux[1]++;
                         }
                         else{
-                            res = res + input.charAt(cont);
+                            res = res + input.charAt(reader);
                         }
                     }
-                    if(aux[0] == 1 && aux[1] == 1){aux= new int[]{0,0};}
-                }else {res = res + input.charAt(cont);}
+                    if(aux[0] == 1 && aux[1] == 1){aux[0]=0;aux[1]=0;del++;}
+                }else {res = res + input.charAt(reader);}
 
                 i= transitions[i][j];
-                cont++;
+                reader++;
             }
             else{
-                stop = false;
+                stop = true;
                 res= "";
             }
 
         }
         if(aux[0] == 1 ){res = res +"a";}
-        else if(aux[1] == 1){res = res +"a";}
+        else if(aux[1] == 1){res = res +"b";}
         boolean fs = false;
         while(!fs && m<finalStates.length){
             if(i == finalStates[m]){
