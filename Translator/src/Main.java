@@ -45,6 +45,16 @@ public class Main {
         automata = new Automata (states, alphabet, initialState, finalStates, transition);
 
         automata.printAutomata();
+        /*
+        //We ask for a word
+        System.out.printf("Enter the word you want to translate");
+        Scanner keyboard = new Scanner(System.in);
+        String word = keyboard.nextLine();
+        */
+        String word ="abbb";
+        String res = automata.translate(word,12);
+        System.out.printf("The translated word is: " +res );
+
 
 
 
