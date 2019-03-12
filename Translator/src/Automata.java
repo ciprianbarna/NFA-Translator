@@ -7,10 +7,6 @@ public class Automata {
     private int[] finalStates;
     private int[][] transitions;
 
-    //default constructor with a default Automata
-    public Automata(){
-
-    }
 
     public Automata(int states, String[] alphabet, int initialState, int[] finalStates, int[][] transitions){
         this.states = states;
@@ -77,8 +73,6 @@ public class Automata {
 
             if(aux[0] == 1 ){translation = translation +"a";}
             else if(aux[1] == 1){translation = translation +"b";}
-
-
 
             while(!isFinalState && i<finalStates.length){
                 if(currentState == finalStates[i]){

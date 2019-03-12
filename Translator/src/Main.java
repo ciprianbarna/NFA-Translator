@@ -41,14 +41,14 @@ public class Main {
                 transition[i][j] = sc.nextInt();
             }
         }
-        sc.nextLine(); // quizá sobra jeje
+        sc.nextLine();
 
         //We build the automata
         automata = new Automata (states, alphabet, initialState, finalStates, transition);
 
         automata.printAutomata();
 
-        //We ask for a word
+        //We ask for words
         while (sc.hasNextLine()){
             word = sc.nextLine();
             System.out.print("Translation for the word \"" + word +"\" is = ");
