@@ -12,6 +12,7 @@ public class Main {
         int [] finalStates;
         int N;
         int[][] transition;
+        String word;
 
         /*
         We read the input from the file.
@@ -40,27 +41,23 @@ public class Main {
                 transition[i][j] = sc.nextInt();
             }
         }
+        sc.nextLine(); // quizá sobra jeje
 
         //We build the automata
         automata = new Automata (states, alphabet, initialState, finalStates, transition);
 
         automata.printAutomata();
-        /*
+
         //We ask for a word
-        System.out.printf("Enter the word you want to translate");
-        Scanner keyboard = new Scanner(System.in);
-        String word = keyboard.nextLine();
-        */
-        String word ="abbb";
-        String res = automata.translate(word,12);
-        System.out.printf("The translated word is: " +res );
+        while (sc.hasNextLine()){
+            word = sc.nextLine();
+            System.out.print("Translation for the word \"" + word +"\" is = ");
+            word = automata.translate(word, N);
+            System.out.println(word);
+        }
 
-
-
+        sc.close();
 
     }
 
-    public static void readAutomata(Automata automata){
-
-    }
 }

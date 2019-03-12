@@ -22,55 +22,76 @@ public class Automata {
 
 
     public String translate(String input, int N){
-        int i= initialState, j, reader=0,del=0,m=0; // i= estado ; j= a/b ; reader for reading the input
-        String res= "";
+        int currentState = initialState;
+        int wordIn;
+        int reader=0;
+        int del=0;
+        int i=0;
+        String translation= "";
         int aux[] = new int[] {0,0};
         boolean stop = false;
-        while(reader < input.length() && !stop){ //recorre la matriz de transiciones hasta que se acabe la palabra o hasta que se detecte que la palabra no es valida
-            if(input.charAt(reader) == 'a'){j=0;} else{j=1;}//selecciona si es a o b
-            if(transitions[i][j]>=0){
-                if(del<N){
-                    if(j==0){//si es a
+        boolean isFinalState = false;
+
+        while(reader < input.length() && !stop){
+
+            if(input.charAt(reader) == 'a'){wordIn=0;} else{wordIn=1;}
+
+            if(transitions[currentState][wordIn]>=0){
+                if(del <= N){
+
+                    if(wordIn==0){//si es a
+
                         if(aux[0] == 0){
                             aux[0]++;
                         }
                         else{
-                            res = res + input.charAt(reader);
+                            translation = translation + input.charAt(reader);
                         }
                     }
                     else{
+
                         if(aux[1] == 0){
                             aux[1]++;
                         }
                         else{
-                            res = res + input.charAt(reader);
+                            translation = translation + input.charAt(reader);
                         }
                     }
+
                     if(aux[0] == 1 && aux[1] == 1){aux[0]=0;aux[1]=0;del++;}
-                }else {res = res + input.charAt(reader);}
 
-                i= transitions[i][j];
+                }else {translation = translation + input.charAt(reader);}
+
+                currentState= transitions[currentState][wordIn];
                 reader++;
-            }
-            else{
+
+            } else{
                 stop = true;
-                res= "";
             }
 
         }
-        if(aux[0] == 1 ){res = res +"a";}
-        else if(aux[1] == 1){res = res +"b";}
-        boolean fs = false;
-        while(!fs && m<finalStates.length){
-            if(i == finalStates[m]){
-                fs = true;
+
+        if (stop){
+            translation = "";
+        } else {
+
+            if(aux[0] == 1 ){translation = translation +"a";}
+            else if(aux[1] == 1){translation = translation +"b";}
+
+
+
+            while(!isFinalState && i<finalStates.length){
+                if(currentState == finalStates[i]){
+                    isFinalState = true;
+                }
+                else {
+                    i++;
+                }
             }
-            else {
-                m++;
-            }
+            if(!isFinalState){translation = "";}
         }
-        if(!fs){res = "";}
-        return res;
+
+        return translation;
     }
 
     public void printAutomata(){
